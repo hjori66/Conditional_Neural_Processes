@@ -55,6 +55,7 @@ class Decoder(nn.Module):
         h4 = F.relu(self.mlp3(h3))
 
         mu = self.mlp_mu(h4)
-        std = F.relu(self.mlp_var(h4)) + 1e-6
-        # var = F.softplus(self.mlp_var(h4)) + 1e-6
-        return mu, std
+        # std = F.relu(self.mlp_var(h4)) + 1e-6
+        var = F.softplus(self.mlp_var(h4)) + 1e-6
+        # return mu, std
+        return mu, var

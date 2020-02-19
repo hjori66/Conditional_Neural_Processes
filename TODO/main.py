@@ -46,9 +46,9 @@ def main(args):
 
         optimizer.zero_grad()
         
-        mean, std = net(x_torch[:ctx_size], y_torch[:ctx_size], x_torch)
-        # mean, variance = net(x_torch[:ctx_size], y_torch[:ctx_size], x_torch)
-        nll_loss = NLLloss(y_torch, mean, std*std)
+        # mean, std = net(x_torch[:ctx_size], y_torch[:ctx_size], x_torch)
+        mean, variance = net(x_torch[:ctx_size], y_torch[:ctx_size], x_torch)
+        nll_loss = NLLloss(y_torch, mean, variance)
 
         if epoch % print_step == 0:
             print('Epoch', epoch, ': nll loss', nll_loss.item())
@@ -64,12 +64,12 @@ def main(args):
         x_torch, y_torch = torch.Tensor(x_train).to(device), torch.Tensor(y_train).to(device)
         x_test_torch = torch.Tensor(x_test).to(device)
 
-        result_mean, result_std = net(x_torch, y_torch, x_test_torch)
-        # result_mean, result_var = net(x_torch, y_torch, x_test_torch)
-        result_mean, result_std = result_mean.cpu().detach().numpy(), result_std.cpu().detach().numpy()
-        # result_mean, result_var = result_mean.cpu().detach().numpy(), result_var.cpu().detach().numpy()
-        print(result_mean, result_std)
-        draw_graph(x_test, y_test, x_train, y_train, result_mean, np.sqrt(result_std*result_std), pic_name=str(i))
+        # result_mean, result_std = net(x_torch, y_torch, x_test_torch)
+        result_mean, result_var = net(x_torch, y_torch, x_test_torch)
+        # result_mean, result_std = result_mean.cpu().detach().numpy(), result_std.cpu().detach().numpy()
+        result_mean, result_var = result_mean.cpu().detach().numpy(), result_var.cpu().detach().numpy()
+        print(result_mean, result_var)
+        draw_graph(x_test, y_test, x_train, y_train, result_mean, np.sqrt(result_var), pic_name=str(i))
 
 
 if __name__ == '__main__':
