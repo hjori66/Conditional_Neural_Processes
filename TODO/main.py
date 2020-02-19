@@ -69,7 +69,7 @@ def main(args):
         result_mean, result_std = result_mean.cpu().detach().numpy(), result_std.cpu().detach().numpy()
         # result_mean, result_var = result_mean.cpu().detach().numpy(), result_var.cpu().detach().numpy()
         print(result_mean, result_std)
-        draw_graph(x_test, y_test, x_train, y_train, result_mean, np.sqrt(result_std), pic_name=str(i))
+        draw_graph(x_test, y_test, x_train, y_train, result_mean, np.sqrt(result_std*result_std), pic_name=str(i))
 
 
 if __name__ == '__main__':
