@@ -1,2 +1,2 @@
-# Conditional_Neural_Processes
-2020 Winter Freshman Study
+# week6_CNP
+Conditional Neural Processes implementation
